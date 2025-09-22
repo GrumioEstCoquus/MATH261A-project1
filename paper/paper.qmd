@@ -16,15 +16,40 @@ bibliography: references.bib
 #| message: false
 
 library(tidyverse)
-library(palmerpenguins)
+rmr_data <- read.csv("C:/Users/josep/OneDrive/Desktop/Math_261A/Project_1/MATH261A-project1/data/project_potential.csv")
 ```
 
 # Introduction
 
+Resting metabolic rate is the amount of energy the body requires to maintain basic life functions while at rest. Another way to think of it, is as the amount of calories one burns through rest. Resting metabolic rate accounts for roughly 60-70% of the calories one burns in a day. While not super important for health diagnostics, knowing one’s resting metabolic rate can help tailor nutrition and diet plans to an individual's needs. 
+Calculating resting metabolic rate requires lab testing. Gas analysis is used to calculate resting metabolic rate. By measuring the amount of oxygen one consumes and the amount of carbon dioxide expelled from the body while at rest, one can obtain a decently accurate estimate of resting metabolic rate. There are formulas to estimate the rate. The most widely used is the Miffling-St Jeor Equation: 10(weight)+6.25H-5A+5 for men and 10W +6.26height-5A-161 for women. 
+While considered the most accurate formula, the equation still has around 26% unknown variance. On top of having different equations for men and women, they have three variables. The question of this report is is height alone a good predictor of resting metabolic rate.
+This report fits a simple linear regression model, with height as the predictor and resting metabolic rate as the response variable. The fitted model is Y_i = -2082.267 +22.075. This means that there is on average a 22.075 increase in the kilocal per day of the resting metabolic rate for a 1 centimeter increase in height.
+
+
 # Data
+
+The data used in this report comes from the Harvard Dataverse.  It was used in a study titled A Gender-agnostic Inclusive Estimation for Resting Metabolic Rate. Height is measured in centimeters and has a mean of 168.399 cm and a standard deviation of 10.18457 cm. Resting metabolic rate is measured in kcal per day with a mean 1635.097 kcal/day and standard deviation 328.4276 kcal/day.
+
+
+```{r}
+#| echo: false
+ggplot(rmr_data, aes(x = Height..cm., y = RMR..kcal.day.)) +
+  geom_point() +
+  xlab("Height (cm)") +
+  ylab("Resting Metabolic Rate (kcal/day)") +
+  ggtitle("Resting Metabolic Rate vs. Height")
+```
+There appears to be a strong positive linear relationship between height and resting metabolic rate. Linear regression will likely be a good model for this data. 
 
 # Methods
 
+Simple linear regression is the model used in this report. The general model is as followed: Y_i = Beta_0 + Beta_1x_i +epsilon. Y_i are observed responses. In this case the observed resting metabolic rates. Beta_0 is the intercept. In this case it does not contain much meaning since the predictor variable is strictly positive. Beta_1 is the slope of the line of best fit. It represents the average increase in resting metabolic rates for a one unit increase in height. X_i are the observed predictor values. In this case, these are the heights. Epsilon is the error term and represents the variability inherent in all data.
+There are several assumptions for simple linear regression. One is that the relationship between the response and predictor must be linear. The others relate to the error terms. The errors must be independently and identically distributed with a normal distribution with constant 
+We fit the simple linear regression model using the lm() function in R.
+
 # Results
+
+
 
 # References

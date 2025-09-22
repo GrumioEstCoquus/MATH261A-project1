@@ -1,6 +1,6 @@
 library(tidyverse)
 
-heart_data <- read.csv("data/project_potential.csv")
+heart_data <- read.csv("project_potential.csv")
 
 ### Explortory Analysis ###
 
@@ -17,12 +17,6 @@ sd(heart_data$RMR..kcal.day.)
 
 ## Box plot ###
 
-ggplot(heart_data, aes(x = group, y = Resting_HR..bpm.))+
-  geom_boxplot(fill = "slateblue", alpha=0.2)
-
-
-ggplot(heart_data, aes(x=Resting_HR..bpm., y = RMR..kcal.day.)) +
-  geom_point()
 
 ### BASED on scatter plot there is no correlation between resting Hr and rmr 
 ggplot(heart_data, aes(x = Height..cm., y = RMR..kcal.day.)) +
