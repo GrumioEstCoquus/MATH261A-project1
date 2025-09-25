@@ -1,13 +1,14 @@
 ---
-title: "Title"
+title: "Estimation of Resting Metabolic Rate With Simple Linear Regression"
 subtitle: "Subtitle"
 author: "Joseph Burks"
-thanks: "Project repository available at: [https://github.com/peteragao/MATH261A-project-template](https://github.com/peteragao/MATH261A-project-template)."
+thanks: "Project repository available at: [https://github.com/GrumioEstCoquus/MATH261A-project1](https://github.com/GrumioEstCoquus/MATH261A-project1)."
 date: today
 date-format: long
 abstract: "Abstract here."
 format: pdf
 bibliography: references.bib
+number-sections: true
 ---
 
 ```{r}
@@ -19,17 +20,22 @@ library(tidyverse)
 rmr_data <- read.csv("C:/Users/josep/OneDrive/Desktop/Math_261A/Project_1/MATH261A-project1/data/rmr_data.csv")
 ```
 
-# Introduction
+# Introduction {#sec-introduction}
 
-Resting metabolic rate is the amount of energy the body requires to maintain basic life functions while at rest. Another way to think of it, is as the amount of calories one burns through rest. Resting metabolic rate accounts for roughly 60-70% of the calories one burns in a day. While not super important for health diagnostics, knowing one’s resting metabolic rate can help tailor nutrition and diet plans to an individual's needs. 
-Calculating resting metabolic rate requires lab testing. Gas analysis is used to calculate resting metabolic rate. By measuring the amount of oxygen one consumes and the amount of carbon dioxide expelled from the body while at rest, one can obtain a decently accurate estimate of resting metabolic rate. There are formulas to estimate the rate. The most widely used is the Miffling-St Jeor Equation: 10(weight)+6.25H-5A+5 for men and 10W +6.26height-5A-161 for women. 
-While considered the most accurate formula, the equation still has around 26% unknown variance. On top of having different equations for men and women, they have three variables. The question of this report is is height alone a good predictor of resting metabolic rate.
-This report fits a simple linear regression model, with height as the predictor and resting metabolic rate as the response variable. The fitted model is Y_i = -2082.267 +22.075. This means that there is on average a 22.075 increase in the kilocal per day of the resting metabolic rate for a 1 centimeter increase in height.
+Resting metabolic rate is the amount of energy the body requires to maintain basic life functions while at rest. Another way to think of it, is as the amount of calories one burns through rest. Resting metabolic rate accounts for roughly 60-70% of the calories one burns in a day [@Plaza-Florido_Alcantara_2023]. While not super important for health diagnostics, knowing one’s resting metabolic rate can help tailor nutrition and diet plans to an individual's needs.
+
+Calculating resting metabolic rate requires lab testing. Gas analysis is used to calculate resting metabolic rate. By measuring the amount of oxygen one consumes and the amount of carbon dioxide expelled from the body while at rest, one can obtain a decently accurate estimate of resting metabolic rate. There are formulas to estimate the rate. The most widely used is the Miffling-St Jeor Equation: 10(weight)+6.25(height)-5(age)+5 for men and 10(weight) +6.26(height)-5(age)-161 for women. 
+While considered the most accurate formula, the equation still has around 26% unknown variance. On top of having different equations for men and women, they have three variables. 
+
+The question of this report seeks to answer is height alone a good predictor of resting metabolic rate.
+This report fits a simple linear regression model, with height as the predictor and resting metabolic rate as the response variable. The fitted model is $\hat{Y} = -2082.267 +22.075X_i$. This means that there is on average a 22.075 increase in the kilocalorie per day of the resting metabolic rate for a 1 centimeter increase in height. 
+
+The remainder of this report is structure as follows: @sec-data discuses the data, @sec-methods discusses the simple linear regression model, @sec-results discusses the results, and @sec-discussion discusses the findings, weaknesses, and further questions. 
 
 
-# Data
+# Data {#sec-data}
 
-The data used in this report comes from the Harvard Dataverse.   It was used in a study titled A Gender-agnostic Inclusive Estimation for Resting Metabolic Rate. [@DVN/MIOESN_2025] Height is measured in centimeters and has a mean of 168.399 cm and a standard deviation of 10.18457 cm. Resting metabolic rate is measured in kcal per day with a mean 1635.097 kcal/day and standard deviation 328.4276 kcal/day.
+The data used in this report comes from the Harvard Dataverse. It was used in a study titled A Gender-agnostic Inclusive Estimation for Resting Metabolic Rate. [@DVN/MIOESN_2025] Height is measured in centimeters and has a mean of 168.399 cm and a standard deviation of 10.18457 cm. Resting metabolic rate is measured in kcal per day with a mean 1635.097 kcal/day and standard deviation 328.4276 kcal/day.
 
 
 ```{r}
@@ -42,21 +48,21 @@ ggplot(rmr_data, aes(x = Height..cm., y = RMR..kcal.day.)) +
 ```
 There appears to be a strong positive linear relationship between height and resting metabolic rate. Linear regression will likely be a good model for this data. 
 
-# Methods
+# Methods {#sec-methods}
 
-Simple linear regression is the model used in this report. The general model is as followed: Y_i = Beta_0 + Beta_1x_i +epsilon. Y_i are observed responses. In this case the observed resting metabolic rates. Beta_0 is the intercept. In this case it does not contain much meaning since the predictor variable is strictly positive. Beta_1 is the slope of the line of best fit. It represents the average increase in resting metabolic rates for a one unit increase in height. X_i are the observed predictor values. In this case, these are the heights. Epsilon is the error term and represents the variability inherent in all data.
+Simple linear regression is the model used in this report. The general model is as followed: $Y_i = \beta_0 + \beta_1x_i +\varepsilon$. $Y_i$ are observed responses. In this case the observed resting metabolic rates. $\beta_0$ is the intercept. In this case it does not contain much meaning since the predictor variable is strictly positive. $\beta_1$ is the slope of the line of best fit. It represents the average increase in resting metabolic rates for a one unit increase in height. $X_i$ are the observed predictor values. In this case, these are the heights. Epsilon is the error term and represents the variability inherent in all data.
+
 There are several assumptions for simple linear regression. One is that the relationship between the response and predictor must be linear. The others relate to the error terms. The errors must be independently and identically distributed with a normal distribution with constant 
-We fit the simple linear regression model using the lm() function in R.
+We fit the simple linear regression model using the lm() function in R [@R-cite].
 
 # Results {#sec-results}
 
 ```{r}
-
 #| warning: false
 #| message: false
-
+#| echo: false
+#| include: false
 lm_fit <- lm(RMR..kcal.day. ~ Height..cm., data = rmr_data)
-summary(lm_fit)
 ```
 The estimated slope parameter is $b_1=$ `r round(coefficients(lm_fit)[2],3)`. This means that for each one centimeter increase in height the resting metabolic rate increase on average by `r round(coefficients(lm_fit)[2],3)`
 
@@ -96,7 +102,7 @@ We use a two-sided t-test with null hypothesis $\beta_1=0$ and alternative hypot
 
 The assumptions seemed to satisfied, thus we can continue with the two-side t-test. The associated p-value for $\beta_1$ is `r summary(lm_fit)$coefficients[2,4]` which is much smaller than the classical significance of $\alpha = 0.05$. Hence we reject the null hypothesis. There is evidence to suggest that $\beta_1\neq 0$. 
 
-# Discussion {sec-discussion}
+# Discussion {#sec-discussion}
 
 Is height a good predictor for resting metabolic rate. The are R-squared offers is a decent size at `r round(summary(lm_fit)$r.squared, 3)`. Meaning height is a decent predictor, although probably not good enough to completely move away from the more common formulas for resting metabolic rate. 
 
