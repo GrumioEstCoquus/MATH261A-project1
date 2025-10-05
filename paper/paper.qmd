@@ -5,10 +5,14 @@ author: "Joseph Burks"
 thanks: "Project repository available at: [https://github.com/GrumioEstCoquus/MATH261A-project1](https://github.com/GrumioEstCoquus/MATH261A-project1)."
 date: today
 date-format: long
-abstract: "Abstract here."
+abstract: |
+  Resting metabolic rate (RMR) is a measure of the energy the body requires to maintain     basic life functions. People can use RMR to   better tailor their diet and nutrition plans, but obtaining an accurate measurement requires laboratory-based tests. In this report we created a predictive equation from data from 95 observations, ranging from 18 to 65 years old. We used simple linear regression with height as the predictor variable tests: $RMR = -2082.267 + 22.075(height) $ ($R^2 = 0.469$). We found height is a moderately accurate predictor of RMR. However, our model explains less of the variation of RMR than more well-established formulas.
 format: pdf
 bibliography: references.bib
 number-sections: true
+header-includes:
+  \usepackage{float}
+  \floatplacement{figure}{H}
 ---
 
 ```{r}
@@ -22,37 +26,40 @@ rmr_data <- read.csv("C:/Users/josep/OneDrive/Desktop/Math_261A/Project_1/MATH26
 
 # Introduction {#sec-introduction}
 
-Resting metabolic rate is the amount of energy the body requires to maintain basic life functions while at rest. Another way to think of it, is as the amount of calories one burns through rest. Resting metabolic rate accounts for roughly 60-70% of the calories one burns in a day [@Plaza-Florido_Alcantara_2023]. While not super important for health diagnostics, knowing one’s resting metabolic rate can help tailor nutrition and diet plans to an individual's needs.
+Resting metabolic rate (RMR) is the amount of energy the body requires to maintain basic life functions while at rest. In other words, is as the amount of calories one burns at rest. RMR accounts for approximately 60-70% of the total calories burnt daily [@Plaza-Florido_Alcantara_2023]. Knowing one’s RMR can help tailor nutrition and diet plans to individuals' needs.
 
-Calculating resting metabolic rate requires lab testing. Gas analysis is used to calculate resting metabolic rate. By measuring the amount of oxygen one consumes and the amount of carbon dioxide expelled from the body while at rest, one can obtain a decently accurate estimate of resting metabolic rate. There are formulas to estimate the rate. The most widely used is the Miffling-St Jeor Equation: 10(weight)+6.25(height)-5(age)+5 for men and 10(weight) +6.26(height)-5(age)-161 for women. 
-While considered the most accurate formula, the equation still has around 26% unknown variance. On top of having different equations for men and women, they have three variables. 
+Accurately measuring RMR requires laboratory testing using gas analysis. By measuring the oxygen consumed and the carbon dioxide expelled while at rest, one can obtain an accurate estimate of RMR. However, due to cost and accessibility, several formula have been developed to estimate RMR. The most widely used, Mifflin-St Jeor Equation uses, four predictors, weight, height, age, and sex. Although considered the most accurate formula, it still leaves approximately 30% of the variance in RMR unexplained [@MIFFLIN1990241]. 
 
-The question of this report seeks to answer is height alone a good predictor of resting metabolic rate.
-This report fits a simple linear regression model, with height as the predictor and resting metabolic rate as the response variable. The fitted model is $\hat{Y} = -2082.267 +22.075X_i$. This means that there is on average a 22.075 increase in the kilocalorie per day of the resting metabolic rate for a 1 centimeter increase in height. 
+The report investigates whether height alone is a good predictor of is height alone a good predictor of resting metabolic rate.
+We fit a simple linear regression model, with height as the predictor and resting metabolic rate as the response variable. The fitted model is $\hat{Y} = -2082.267\mbox{ } kcal/day+22.075 \mbox{ }cm X$. This means that on average, RMR increase by 22.075 kcal/day for each additional centimeter of height.
 
-The remainder of this report is structure as follows: @sec-data discuses the data, @sec-methods discusses the simple linear regression model, @sec-results discusses the results, and @sec-discussion discusses the findings, weaknesses, and further questions. 
+The remainder of this report is structured as follows: @sec-data discuses the data, @sec-methods discusses the simple linear regression model, @sec-results discusses the results, and @sec-discussion discusses the findings, weaknesses, and further questions. 
 
 
 # Data {#sec-data}
 
-The data used in this report comes from the Harvard Dataverse. It was used in a study titled A Gender-agnostic Inclusive Estimation for Resting Metabolic Rate. [@DVN/MIOESN_2025] Height is measured in centimeters and has a mean of 168.399 cm and a standard deviation of 10.18457 cm. Resting metabolic rate is measured in kcal per day with a mean 1635.097 kcal/day and standard deviation 328.4276 kcal/day.
+The data used in this report comes from the Harvard Dataverse and was used in the study  Gender-agnostic Inclusive Estimation for Resting Metabolic Rate. [@DVN/MIOESN_2025]. The dataset contains 95 observations, with  participant ages ranging from 18 to 65 years. The variables of interest are height and resting metabolic rate Height is measured in centimeters and has a mean of 168.399 cm and a standard deviation of 10.185 cm. Resting metabolic rate is measured in kcal per day with a mean 1635.097 kcal/day and standard deviation 328.428 kcal/day.
 
 
-```{r}
+```{r fig-scatter-plot}
 #| echo: false
+#| label: fig-scatter-plot
 ggplot(rmr_data, aes(x = Height..cm., y = RMR..kcal.day.)) +
   geom_point() +
   xlab("Height (cm)") +
   ylab("Resting Metabolic Rate (kcal/day)") +
   ggtitle("Resting Metabolic Rate vs. Height")
 ```
-There appears to be a strong positive linear relationship between height and resting metabolic rate. Linear regression will likely be a good model for this data. 
+
+
+A preliminary scatterplot [@fig-scatter-plot] indicated a strong posiive linear relationship between height and RMR, suggesting that linear regression would likely be an appropriate model.
 
 # Methods {#sec-methods}
 
-Simple linear regression is the model used in this report. The general model is as followed: $Y_i = \beta_0 + \beta_1x_i +\varepsilon$. $Y_i$ are observed responses. In this case the observed resting metabolic rates. $\beta_0$ is the intercept. In this case it does not contain much meaning since the predictor variable is strictly positive. $\beta_1$ is the slope of the line of best fit. It represents the average increase in resting metabolic rates for a one unit increase in height. $X_i$ are the observed predictor values. In this case, these are the heights. Epsilon is the error term and represents the variability inherent in all data.
+We used a simple linear regression model in this report. The general model is as followed: $Y_i = \beta_0 + \beta_1x_i +\varepsilon$. $Y_i$ are observed responses. In this case the observed RMRs. $\beta_0$ is the intercept. In this case it does not contain much meaning since the predictor variable is strictly positive. $\beta_1$ is the slope of the line of best fit. It represents the average increase in resting metabolic rates for a one centimeter increase in height. $X_i$ are the observed predictor values. In this case, these are the heights. Epsilon is the error term and represents the inherent variability.
 
-There are several assumptions for simple linear regression. One is that the relationship between the response and predictor must be linear. The others relate to the error terms. The errors must be independently and identically distributed with a normal distribution with constant 
+There are several assumptions for simple linear regression. One is that the relationship between the response and predictor must be linear. The others relate to the error terms. The errors must be independently and identically distributed with a normal distribution with constant variance.
+If the above assumptions are true, we can use hypothesis testing to test the model estimates. The null hypotheses are $\beta_0=0$ and $\beta_1 = 0$
 We fit the simple linear regression model using the lm() function in R [@R-cite].
 
 # Results {#sec-results}
@@ -64,16 +71,27 @@ We fit the simple linear regression model using the lm() function in R [@R-cite]
 #| include: false
 lm_fit <- lm(RMR..kcal.day. ~ Height..cm., data = rmr_data)
 ```
+
+The fitted model is:
+$\hat{Y}_i$ =
+`r round(coefficients(lm_fit)[1],3)`+`r round(coefficients(lm_fit)[2],3)` $X_i$
+
+The estimated intercept parameter is $b_0=$ `r round(coefficients(lm_fit)[1],3)`. This represents the average RMR for some one who has a height of 0cm. Since height is strictly positive, there intercept does not contain much meaning.
+
 The estimated slope parameter is $b_1=$ `r round(coefficients(lm_fit)[2],3)`. This means that for each one centimeter increase in height the resting metabolic rate increase on average by `r round(coefficients(lm_fit)[2],3)`
 
-The estimated intercept parameter is $b_0=$ `r round(coefficients(lm_fit)[1],3)`. This represents the average resting metabolic rate for some one who has a height of 0cm. Since height is strictly positive, there intercept does not contain much meaning.
 
-This simple linear regression has an R-squared of `r round(summary(lm_fit)$r.squared, 3)`. This means the model explains around `r round(summary(lm_fit)$r.squared, 3) * 100 `% of the variation in the data.
+This simple linear regression has an R-squared of `r round(summary(lm_fit)$r.squared, 3)`. This means the model explains around `r round(summary(lm_fit)$r.squared, 3) * 100 `% of the variation of RMR.
+
+To test the assumptions of errors having mean 0 and constant variance, we plot the residuals ($\hat{Y_i} - Y_i$) vs the fitted values ([@fig-rmr-residual]).
+
+
 
 ```{r fig-rmr-residual}
 #| echo: false
 #| warning: false
 #| message: false
+#| label: fig-rmr-residual
 #| fig-cap: "Residuals (y-axis) vs fitted values (x-axis) for a simple linear regression model with resting metabolic rate (kcal/day) as the response and height (cm) as the predictor"
 
 plot_data <- data.frame(resid = resid(lm_fit),
@@ -87,10 +105,16 @@ ggplot(plot_data, aes(x = fitted, y =resid)) +
   ggtitle("Residuals vs. Fitted Value")
 ```
 
+[@fig-rmr-residual] shows the residuals scattered randomly spread and seem to have mean 0. While there are a few oddities with extreme points, these are likely due to lack of data rather than assumption violations. Based on the [@fig-rmr-residual], the assumptions of independence, constant variance, and mean zero appear satisfied.
+
+
+To test the assumption of normality, we graph a QQ plot, the sample quantiles vs the thoeritical normal quanties ([@fig-qq-plot]). If the data is normal, they points on the QQ-plot will lie on a straight liine.
+
 ```{r fig-qq-plot}
 #| echo: false
 #| warning: false
 #| message: false
+#| label: fig-qq-plot
 #| fig-cap: "Plot of sample quantiles vs the theoritical normal distribution quantiles"
 ggplot(rmr_data, aes(sample = RMR..kcal.day.)) +
   stat_qq() +
@@ -98,20 +122,22 @@ ggplot(rmr_data, aes(sample = RMR..kcal.day.)) +
   ggtitle("Normal QQ Plot")
 ```
 
-We use a two-sided t-test with null hypothesis $\beta_1=0$ and alternative hypothesis $\beta_1\neq0$. For this test to be valid, we require that the error terms be independently and normally distributed with mean 0 and constant variance. @fig-rmr-residual seems to indicate that there is constant variance and independence, although the extremes start to diverge from what is expected a bit. This is likely from the lack of data, rather than a violation of assumptions. @fig-qq-plot indicates that the errors are normal, as there is very little deviation from the line. 
+[@fig-qq-plot] shows very little deviations from the straight line, indication that the assumption of normality of the error terms is also satisfied.
 
-The assumptions seemed to satisfied, thus we can continue with the two-side t-test. The associated p-value for $\beta_1$ is `r summary(lm_fit)$coefficients[2,4]` which is much smaller than the classical significance of $\alpha = 0.05$. Hence we reject the null hypothesis. There is evidence to suggest that $\beta_1\neq 0$. 
+Because the data satisfy the assumptions, we can use hypothesis testing to check the model fit.
+
+We conducted a two-sided t-test with null hypothesis $\beta_1=0$ and alternative hypothesis $\beta_1\neq0$. 
+
+The associated p-value for $\beta_1$ is `r summary(lm_fit)$coefficients[2,4]` which is much smaller than the classical significance of $\alpha = 0.05$. Hence we reject the null hypothesis. There is evidence to suggest that $\beta_1\neq 0$. 
+
+
 
 # Discussion {#sec-discussion}
 
-Is height a good predictor for resting metabolic rate. The are R-squared offers is a decent size at `r round(summary(lm_fit)$r.squared, 3)`. Meaning height is a decent predictor, although probably not good enough to completely move away from the more common formulas for resting metabolic rate. 
+The simple linear regression model indicates that height is a moderately strong predictor of RMR, explaining nearly half of its variation  $R^2 = $ `r round(summary(lm_fit)$r.squared, 3)`. Moreover, the result of the hypothesis test indicate that the estimated slope is statistically significant. However, while height alone is while height alone is a decent predictor, it leaves a lot variation unexplained. The Mifflin-St Jeor Equation is which includes height, weight, age, and gender is more accurate and liekly better. 
 
-The model is a good fit and all the necessary  assumptions for simple linear regression are satisfied. Since resting metabolic rate is not a good metric for health, not everyone may want or need a super accurate measurement. In this case the simplicity of this model may be advantageous to some. However, the Miffling-St Jeor Equation is not super complex, so it is likely better in most situations.
+Height may also be a proxy for weight. Taller people on average will weigh more than shorter people. Future research could test whether weight provides a stronger relationship, or use BMI as a way to standardize height and weight.
 
-Height may not be the best predictor. Height can often by a stand in for weight, as taller people on average will weigh more than shorter people. One question with this model, is is height influencing resting metabolic rate in a significant way or is it really just weight. 
-
-In the future we could use weight as a predictor to see if this is the case, or we could calculate the BMI to account for the expected increase in weight for an increase in height. 
-
-Fitting a multiple linear regression using more body composition variables as predictors is a good next step for this research. We could explore if it is really necessary to have different equations for male and female as the the Miffling-St Jeor Equation does. 
+A valuable next step would be fitting a multiple linear regression using aditional body composition variables as predictors. This could explore if it is necesscary for men and women to have separate equations, as in the Mifflin-St Jeor Equation. 
 
 # References

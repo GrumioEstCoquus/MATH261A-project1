@@ -1,16 +1,14 @@
-# MATH261A-project-template
-Example project repository for MATH 261A.
+# MATH261A-project
+Repository for simple linear regression project forMATH 261A.
 
 ## Data 
 
-**Example statement:** Data used in this project is obtained from [San Francisco Open Data](https://data.sfgov.org) who provide the data under the [Open Data Commons Public Domain Dedication and License](https://opendatacommons.org/licenses/pddl/1-0/).
+Data used in this project is obtained from [Harvard Datverse](https://dataverse.harvard.edu/), and was collected by James Navalta, who provide the data under the [Open Data Commons Public Domain Dedication and License](https://opendatacommons.org/licenses/pddl/1-0/).
 
 ## External Resources
 
-**Example statement:** The final report and code were written by [your name], but the following resources were used for preliminary research:
+**Example statement:** The final report and code were written by [Joseph Burks].
 
-* LLM-based chatbots (ex. ChatGPT Edu)
-* Online forums (ex. Stack Overflow).
 
 # Acknowledgments
 
