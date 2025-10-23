@@ -1,5 +1,5 @@
 # MATH261A-project
-Repository for simple linear regression project forMATH 261A.
+Repository for simple linear regression project for MATH 261A.
 
 ## Data 
 
@@ -7,7 +7,7 @@ Data used in this project is obtained from [Harvard Datverse](https://dataverse.
 
 ## External Resources
 
-**Example statement:** The final report and code were written by [Joseph Burks].
+The final report and code were written by [Joseph Burks].
 
 
 # Acknowledgments
