@@ -1,6 +1,6 @@
 library(tidyverse)
 
-heart_data <- read.csv("project_potential.csv")
+heart_data <- read.csv("rmr_data.csv")
 
 ### Explortory Analysis ###
 

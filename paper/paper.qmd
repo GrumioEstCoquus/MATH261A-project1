@@ -28,7 +28,7 @@ rmr_data <- read.csv("C:/Users/josep/OneDrive/Desktop/Math_261A/Project_1/MATH26
 
 Resting metabolic rate (RMR) is the amount of energy the body requires to maintain basic life functions while at rest. In other words, is as the amount of calories one burns at rest. RMR accounts for approximately 60-70% of the total calories burnt daily [@Plaza-Florido_Alcantara_2023]. Knowing one’s RMR can help tailor nutrition and diet plans to individuals' needs.
 
-Accurately measuring RMR requires laboratory testing using gas analysis. By measuring the oxygen consumed and the carbon dioxide expelled while at rest, one can obtain an accurate estimate of RMR. However, due to cost and accessibility, several formula have been developed to estimate RMR. The most widely used, Mifflin-St Jeor Equation, uses, four predictors, weight, height, age, and sex. Although considered the most accurate formula, it still leaves approximately 30% of the variance in RMR unexplained [@MIFFLIN1990241]. 
+Accurately measuring RMR requires laboratory testing using gas analysis. By measuring the oxygen consumed and the carbon dioxide expelled while at rest, one can obtain an accurate estimate of RMR. However, due to cost and accessibility, several formula have been developed to estimate RMR. The most widely used one is the Mifflin-St Jeor Equation which uses four predictors: weight, height, age, and sex. Although considered the most accurate formula, it still leaves approximately 30% of the variance in RMR unexplained [@MIFFLIN1990241]. 
 
 The report investigates whether height alone is a good predictor of is height alone a good predictor of resting metabolic rate.
 We fit a simple linear regression model, with height as the predictor and resting metabolic rate as the response variable. The fitted model is $\hat{Y} = -2082.267\mbox{ } kcal/day+22.075 \mbox{ }cm X$. On average, RMR increase by 22.075 kcal/day for each additional centimeter of height.
@@ -38,7 +38,7 @@ The remainder of this report is structured as follows: @sec-data discuses the da
 
 # Data {#sec-data}
 
-The data we used in this report comes from the Harvard Dataverse and was used in the study Gender-agnostic Inclusive Estimation for Resting Metabolic Rate. [@DVN/MIOESN_2025]. The dataset contains 95 observations, with  participant ages ranging from 18 to 65 years. The variables of interest are height and resting metabolic rate Height is measured in centimeters and has a mean of 168.399 cm and a standard deviation of 10.185 cm. Resting metabolic rate is measured in kcal per day with a mean 1635.097 kcal/day and standard deviation 328.428 kcal/day.
+The data we used in this report comes from the Harvard Dataverse and was used in the study Gender-agnostic Inclusive Estimation for Resting Metabolic Rate. [@DVN/MIOESN_2025]. The dataset contains 95 observations, with  participant ages ranging from 18 to 65 years. Participants' RMR was measured using indirect calorimetry. The variables of interest are height and resting metabolic rate Height is measured in centimeters and has a mean of 168.399 cm and a standard deviation of 10.185 cm. Resting metabolic rate is measured in kcal per day with a mean 1635.097 kcal/day and standard deviation 328.428 kcal/day.
 
 
 ```{r fig-scatter-plot}

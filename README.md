@@ -1,5 +1,5 @@
 # MATH261A-project
-Repository for simple linear regression project for MATH 261A.
+Repository for simple linear regression project for MATH 261A at SJSU.
 
 ## Data 
 
